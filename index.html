@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>METAIMPERIYA — Полный учебник</title>
+    <title>📚 METAIMPERIYA — ПОЛНАЯ КНИГА</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0b0e14;
@@ -19,111 +19,145 @@
             color: #1a1e26;
         }
         body.light .card { background: #fff; border-color: #d0d7e2; }
-        body.light .file-content { background: #f8fafc; border-color: #d0d7e2; }
-        body.light .tree-folder > .folder-label { background: #eef2f7; }
-        body.light .search-input { background: #fff; color: #1a1e26; border-color: #d0d7e2; }
-        body.light .tab-btn { background: #eef2f7; color: #1a1e26; }
-        body.light .tab-btn.active { background: #1a73e8; color: #fff; }
-        body.light .badge { background: #e8edf5; color: #1a1e26; }
+        body.light .table-wrap { background: #f8fafc; border-color: #d0d7e2; }
+        body.light .chapter-number { background: #eef2f7; color: #1a5bb5; }
+        body.light .toc-item { border-bottom: 1px solid #eef2f7; }
+        body.light .toc-item:hover { background: #eef2f7; }
 
         .container { max-width: 820px; margin: 0 auto; }
 
+        /* HEADER */
         .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            text-align: center;
+            padding: 30px 0 20px;
+            border-bottom: 2px solid #252c38;
+            margin-bottom: 30px;
         }
+        body.light .header { border-color: #d0d7e2; }
         .header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #4fc3f7, #7c4dff);
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4fc3f7, #7c4dff, #f7c948);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
         }
+        .header .sub {
+            color: #6a7a8e;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        body.light .header .sub { color: #5a6a7e; }
+
         .header-actions {
             display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
         }
-        .theme-toggle, .search-toggle {
+        .theme-toggle {
             background: #252c38;
             border: none;
             color: #e8edf5;
             font-size: 20px;
-            padding: 6px 12px;
+            padding: 6px 16px;
             border-radius: 10px;
             cursor: pointer;
             transition: 0.2s;
         }
-        body.light .theme-toggle, body.light .search-toggle {
+        body.light .theme-toggle {
             background: #eef2f7;
             color: #1a1e26;
         }
-        .theme-toggle:hover, .search-toggle:hover { opacity: 0.8; }
+        .theme-toggle:hover { opacity: 0.8; }
 
-        .search-wrap { display: none; width: 100%; margin-bottom: 16px; }
-        .search-wrap.open { display: block; }
-        .search-input {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid #2a3340;
-            background: #141b24;
-            color: #e8edf5;
-            font-size: 15px;
-            outline: none;
+        /* TOC */
+        .toc {
+            display: grid;
+            gap: 4px;
+            margin-bottom: 30px;
         }
-        .search-input:focus { border-color: #4fc3f7; }
-
-        .tabs {
+        .toc-item {
             display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-            overflow-x: auto;
-            padding-bottom: 4px;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+            background: #141b24;
+            border-bottom: 1px solid #1a212b;
         }
-        .tab-btn {
+        body.light .toc-item { background: #fff; border-color: #eef2f7; }
+        .toc-item:hover { background: #1a212b; }
+        body.light .toc-item:hover { background: #eef2f7; }
+        .toc-num {
+            font-weight: 700;
+            color: #4fc3f7;
+            font-size: 14px;
+            min-width: 30px;
+        }
+        body.light .toc-num { color: #1a73e8; }
+        .toc-title { font-size: 15px; font-weight: 500; }
+        .toc-badge {
+            margin-left: auto;
+            font-size: 11px;
+            background: #252c38;
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: #6a7a8e;
+        }
+        body.light .toc-badge { background: #eef2f7; color: #5a6a7e; }
+
+        /* CHAPTER */
+        .chapter {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .chapter.active { display: block; }
+
+        @keyframes fade { from { opacity: 0.3; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .chapter-number {
+            display: inline-block;
             background: #1a212b;
-            border: none;
-            color: #aab3c2;
-            padding: 8px 16px;
+            padding: 4px 16px;
             border-radius: 20px;
             font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
+            font-weight: 600;
+            color: #4fc3f7;
+            margin-bottom: 6px;
         }
-        .tab-btn.active { background: #1a73e8; color: #fff; }
-        .tab-btn:hover { opacity: 0.8; }
-
-        .section { display: none; animation: fade 0.25s ease; }
-        .section.active { display: block; }
-        @keyframes fade { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .chapter h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .chapter .desc {
+            color: #6a7a8e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        body.light .chapter .desc { color: #5a6a7e; }
 
         .card {
             background: #141b24;
             border: 1px solid #252c38;
             border-radius: 14px;
             padding: 16px 14px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             transition: 0.2s;
         }
-        .card h2 {
+        body.light .card { background: #fff; border-color: #d0d7e2; }
+        .card h3 {
             font-size: 17px;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .card h2 .badge {
+        .card h3 .badge {
             font-size: 11px;
             background: #252c38;
             padding: 2px 10px;
@@ -131,6 +165,7 @@
             font-weight: 400;
             color: #aab3c2;
         }
+        body.light .card h3 .badge { background: #eef2f7; color: #5a6a7e; }
         .card p, .card li {
             font-size: 14px;
             line-height: 1.6;
@@ -140,18 +175,83 @@
         .card ul { padding-left: 20px; margin: 6px 0; }
         .card li { margin-bottom: 4px; }
 
+        /* TABLES */
+        .table-wrap {
+            overflow-x: auto;
+            background: #0b0f16;
+            border: 1px solid #1a212b;
+            border-radius: 10px;
+            padding: 0;
+            margin-top: 8px;
+        }
+        body.light .table-wrap { background: #f8fafc; border-color: #d0d7e2; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 400px;
+        }
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            background: #1a212b;
+            color: #aab3c2;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid #252c38;
+        }
+        body.light th { background: #eef2f7; color: #1a1e26; border-color: #d0d7e2; }
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #1a212b;
+            color: #c8d0dd;
+            vertical-align: top;
+        }
+        body.light td { border-color: #eef2f7; color: #1a1e26; }
+        tr:last-child td { border-bottom: none; }
+        td:first-child { font-weight: 500; color: #7cbbf7; }
+        body.light td:first-child { color: #1a5bb5; }
+        td code {
+            background: #1a212b;
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #f7c948;
+        }
+        body.light td code { background: #eef2f7; color: #c06a0a; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1a212b;
+            border: none;
+            color: #aab3c2;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-bottom: 16px;
+            transition: 0.15s;
+        }
+        body.light .back-btn { background: #eef2f7; color: #1a1e26; }
+        .back-btn:hover { opacity: 0.8; }
+
+        /* FILE TREE */
         .tree {
             font-family: 'SF Mono', 'Menlo', monospace;
             font-size: 13px;
-            line-height: 1.7;
+            line-height: 1.8;
         }
         .tree-folder { margin-left: 4px; }
         .folder-label {
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 8px;
-            border-radius: 8px;
+            padding: 3px 8px;
+            border-radius: 6px;
             cursor: pointer;
             background: #1a212b;
             margin-bottom: 2px;
@@ -171,76 +271,23 @@
         }
         body.light .folder-children { border-color: #d0d7e2; }
         .folder-children.open { display: block; }
-
         .file-item {
-            padding: 3px 8px;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.15s;
+            padding: 2px 8px;
+            border-radius: 4px;
             color: #b0c4de;
         }
         body.light .file-item { color: #1e3a6b; }
-        .file-item:hover { background: #1a212b; }
-        body.light .file-item:hover { background: #e8edf5; }
-        .file-item .ext {
-            color: #6a7a8e;
-            font-size: 11px;
-            margin-left: 6px;
-        }
-        body.light .file-item .ext { color: #7a8aa0; }
-
-        .file-content {
-            display: none;
-            background: #0b0f16;
-            border: 1px solid #252c38;
-            border-radius: 10px;
-            padding: 12px 14px;
-            margin-top: 8px;
-            overflow-x: auto;
-            font-size: 12px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-break: break-word;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .file-content.open { display: block; }
-        .file-content code {
-            font-family: 'SF Mono', 'Menlo', monospace;
-            color: #d4e0f0;
-        }
-        body.light .file-content code { color: #1a2636; }
-
-        .badge-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        .badge-list .tag {
-            background: #1a212b;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #aab3c2;
-        }
-        body.light .badge-list .tag { background: #eef2f7; color: #2d3545; }
-
-        .hl { color: #f7c948; }
-        .hl-str { color: #7cbf7c; }
-        .hl-key { color: #7cbbf7; }
-        .hl-com { color: #6a7a8e; font-style: italic; }
-        body.light .hl-com { color: #8a9aae; }
+        .file-item .ext { color: #6a7a8e; font-size: 11px; margin-left: 6px; }
 
         @media (max-width: 500px) {
             body { padding: 10px 8px 30px; }
+            .header h1 { font-size: 22px; }
+            .chapter h2 { font-size: 20px; }
             .card { padding: 12px 10px; }
-            .header h1 { font-size: 17px; }
-            .tab-btn { font-size: 12px; padding: 6px 12px; }
-            .file-content { font-size: 11px; max-height: 300px; }
-            .tree { font-size: 12px; }
+            table { font-size: 12px; min-width: 300px; }
+            td, th { padding: 6px 8px; }
+            .toc-title { font-size: 14px; }
         }
-        @media (min-width: 768px) { .container { max-width: 900px; } }
 
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #141b24; }
@@ -252,194 +299,742 @@
 <body>
 <div class="container">
 
+    <!-- HEADER -->
     <div class="header">
-        <h1>🏛️ METAIMPERIYA · Учебник</h1>
+        <h1>📚 METAIMPERIYA</h1>
+        <div class="sub">Полная документация проекта · 10 глав · 47 файлов</div>
         <div class="header-actions">
-            <button class="search-toggle" id="searchToggle">🔍</button>
             <button class="theme-toggle" id="themeToggle">🌙</button>
         </div>
     </div>
 
-    <div class="search-wrap" id="searchWrap">
-        <input class="search-input" id="searchInput" placeholder="Поиск по файлам, функциям, категориям..." />
-    </div>
-
-    <div class="tabs" id="tabs">
-        <button class="tab-btn active" data-tab="tree">📁 Структура</button>
-        <button class="tab-btn" data-tab="features">🚀 Возможности</button>
-        <button class="tab-btn" data-tab="tech">🛠 Технологии</button>
-        <button class="tab-btn" data-tab="db">📊 База данных</button>
-        <button class="tab-btn" data-tab="fire">🔥 Особенности</button>
-        <button class="tab-btn" data-tab="player">🎵 Плеер</button>
-        <button class="tab-btn" data-tab="admin">👑 Админка</button>
-        <button class="tab-btn" data-tab="mobile">📱 Адаптив</button>
-        <button class="tab-btn" data-tab="pwa">📲 PWA</button>
-    </div>
-
-    <!-- ===== TREE ===== -->
-    <div class="section active" id="sec-tree">
-        <div class="card">
-            <h2>📁 Полная структура проекта <span class="badge">все файлы</span></h2>
-            <div class="tree" id="treeContainer"></div>
+    <!-- ===== ОГЛАВЛЕНИЕ ===== -->
+    <div id="toc">
+        <div class="toc-item" data-chapter="0">
+            <span class="toc-num">📖</span>
+            <span class="toc-title">Оглавление</span>
+            <span class="toc-badge">Главная</span>
         </div>
-        <div class="card" style="border-color:#2a5a3a;">
-            <h2>💡 Как пользоваться</h2>
-            <ul>
-                <li>📂 <strong>Кликай на папку</strong> — раскрывается содержимое</li>
-                <li>📄 <strong>Кликай на файл</strong> — показывается его код/содержимое</li>
-                <li>🔍 <strong>Поиск</strong> — ищет по названиям файлов и содержимому</li>
-                <li>🌙 <strong>Тёмная/светлая тема</strong> — для глаз</li>
-            </ul>
+        <div class="toc-item" data-chapter="1">
+            <span class="toc-num">1</span>
+            <span class="toc-title">📁 Структура проекта (дерево)</span>
+            <span class="toc-badge">47 файлов</span>
+        </div>
+        <div class="toc-item" data-chapter="2">
+            <span class="toc-num">2</span>
+            <span class="toc-title">🚀 Основные возможности</span>
+            <span class="toc-badge">10 функций</span>
+        </div>
+        <div class="toc-item" data-chapter="3">
+            <span class="toc-num">3</span>
+            <span class="toc-title">🛠 Технический стек</span>
+            <span class="toc-badge">8 технологий</span>
+        </div>
+        <div class="toc-item" data-chapter="4">
+            <span class="toc-num">4</span>
+            <span class="toc-title">🗄️ Структура базы данных</span>
+            <span class="toc-badge">9 узлов</span>
+        </div>
+        <div class="toc-item" data-chapter="5">
+            <span class="toc-num">5</span>
+            <span class="toc-title">📂 CSS — стили</span>
+            <span class="toc-badge">3 файла</span>
+        </div>
+        <div class="toc-item" data-chapter="6">
+            <span class="toc-num">6</span>
+            <span class="toc-title">📜 JS — скрипты</span>
+            <span class="toc-badge">11 файлов</span>
+        </div>
+        <div class="toc-item" data-chapter="7">
+            <span class="toc-num">7</span>
+            <span class="toc-title">🎵 Музыкальный плеер</span>
+            <span class="toc-badge">9 треков</span>
+        </div>
+        <div class="toc-item" data-chapter="8">
+            <span class="toc-num">8</span>
+            <span class="toc-title">👑 Админ-панель</span>
+            <span class="toc-badge">3 админа</span>
+        </div>
+        <div class="toc-item" data-chapter="9">
+            <span class="toc-num">9</span>
+            <span class="toc-title">📱 Адаптивность</span>
+            <span class="toc-badge">4 брейкпоинта</span>
+        </div>
+        <div class="toc-item" data-chapter="10">
+            <span class="toc-num">10</span>
+            <span class="toc-title">📲 PWA & Service Worker</span>
+            <span class="toc-badge">sw.js</span>
         </div>
     </div>
 
-    <!-- ===== FEATURES ===== -->
-    <div class="section" id="sec-features">
-        <div class="card"><h2>🚀 Основные возможности</h2>
-            <ul>
-                <li><strong>👤 Авторизация</strong> — Google + анонимный вход, сохранение профилей в localStorage</li>
-                <li><strong>👥 Пользователи</strong> — список всех, просмотр профилей, аватарки</li>
-                <li><strong>🤝 Друзья</strong> — заявки, принятие/отклонение, удаление, списки (друзья, подписки, подписчики)</li>
-                <li><strong>💬 Личные сообщения</strong> — приватные чаты, уведомления о новых</li>
-                <li><strong>🔔 Уведомления</strong> — о заявках, принятии, сообщениях, счётчик непрочитанных</li>
-                <li><strong>👥 Группы</strong> — 9 встроенных + создание своих, чаты групп</li>
-                <li><strong>🔒 Приватность</strong> — скрытие списков друзей, toggle в профиле</li>
-                <li><strong>👑 Админ-панель</strong> — удаление пользователей, очистка комнат, экспорт JSON</li>
-                <li><strong>🎵 Плеер</strong> — 9 треков, прогресс-бар, автоматическое переключение</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- ===== TECH ===== -->
-    <div class="section" id="sec-tech">
-        <div class="card"><h2>🛠 Технический стек</h2>
-            <div class="badge-list">
-                <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Vanilla JS</span>
-                <span class="tag">Firebase Auth</span><span class="tag">Firebase Realtime DB</span>
-                <span class="tag">Firebase Storage</span><span class="tag">Mobile-first</span>
-                <span class="tag">SPA</span><span class="tag">PWA</span>
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 0: ОГЛАВЛЕНИЕ (ДУБЛЬ) -->
+    <!-- ============================================================ -->
+    <div class="chapter active" id="ch-0">
+        <div class="card" style="text-align:center;padding:30px 16px;">
+            <h2 style="font-size:28px;background:linear-gradient(135deg,#4fc3f7,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">📖 Оглавление</h2>
+            <p style="color:#6a7a8e;margin:8px 0 16px;">Книга по проекту METAIMPERIYA — 10 глав, 47 файлов</p>
+            <div style="text-align:left;max-width:400px;margin:0 auto;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>1. Структура проекта</span><span style="color:#6a7a8e;">47 файлов</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>2. Основные возможности</span><span style="color:#6a7a8e;">10 функций</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>3. Технический стек</span><span style="color:#6a7a8e;">8 технологий</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>4. Структура БД</span><span style="color:#6a7a8e;">9 узлов</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>5. CSS — стили</span><span style="color:#6a7a8e;">3 файла</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>6. JS — скрипты</span><span style="color:#6a7a8e;">11 файлов</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>7. Музыкальный плеер</span><span style="color:#6a7a8e;">9 треков</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>8. Админ-панель</span><span style="color:#6a7a8e;">3 админа</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a212b;"><span>9. Адаптивность</span><span style="color:#6a7a8e;">4 брейкпоинта</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;"><span>10. PWA & Service Worker</span><span style="color:#6a7a8e;">sw.js</span></div>
             </div>
         </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 1: СТРУКТУРА -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-1">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 1</span>
+        <h2>📁 Структура проекта</h2>
+        <p class="desc">Полное дерево всех файлов и папок METAIMPERIYA</p>
+
+        <div class="card">
+            <h3>🌳 Дерево проекта</h3>
+            <div class="tree" id="treeContainer"></div>
+        </div>
+
+        <div class="card">
+            <h3>📊 Статистика</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Тип</th><th>Количество</th></tr>
+                    <tr><td>Всего файлов</td><td>47</td></tr>
+                    <tr><td>HTML</td><td>3 (index, 404, admin)</td></tr>
+                    <tr><td>CSS</td><td>3</td></tr>
+                    <tr><td>JavaScript</td><td>11</td></tr>
+                    <tr><td>Музыка (MP3)</td><td>9</td></tr>
+                    <tr><td>Конфиги (JSON, TXT, MD)</td><td>8</td></tr>
+                    <tr><td>Изображения</td><td>6</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 2: ВОЗМОЖНОСТИ -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-2">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 2</span>
+        <h2>🚀 Основные возможности</h2>
+        <p class="desc">Полный список функционала социальной сети</p>
+
+        <div class="card">
+            <h3>👤 Авторизация</h3>
+            <ul>
+                <li>Вход через Google (Firebase Auth)</li>
+                <li>Анонимный вход с сохранением профиля</li>
+                <li>Автоматическое сохранение профилей в localStorage</li>
+                <li>Переключение между сохранёнными аккаунтами</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>👥 Пользователи</h3>
+            <ul>
+                <li>Список всех зарегистрированных пользователей</li>
+                <li>Просмотр профилей в один клик</li>
+                <li>Аватарки с возможностью загрузки (Firebase Storage)</li>
+                <li>Статус "В сети" (онлайн/офлайн)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🤝 Друзья</h3>
+            <ul>
+                <li>Отправка и получение заявок в друзья</li>
+                <li>Принятие/отклонение запросов</li>
+                <li>Удаление из друзей</li>
+                <li>Автоматическая подписка при отправке запроса</li>
+                <li>Списки: Друзья, Подписки, Подписчики</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>💬 Личные сообщения</h3>
+            <ul>
+                <li>Приватные чаты между пользователями</li>
+                <li>Уникальный ID чата (сортировка UID)</li>
+                <li>Уведомления о новых сообщениях</li>
+                <li>Отдельное окно чата поверх интерфейса</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🔔 Уведомления</h3>
+            <ul>
+                <li>Уведомления о запросах в друзья</li>
+                <li>Уведомления о принятии запроса</li>
+                <li>Уведомления о новых сообщениях</li>
+                <li>Счётчик непрочитанных уведомлений</li>
+                <li>Клик → переход в чат/профиль</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>👥 Группы</h3>
+            <ul>
+                <li>Встроенные группы: Общий, Спорт, Игры, Музыка, Технологии, Еда, Путешествия, Мода, Наука</li>
+                <li>Создание собственных групп</li>
+                <li>Счётчик участников в реальном времени</li>
+                <li>Отдельные чаты для каждой группы</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🔒 Приватность</h3>
+            <ul>
+                <li>Скрытие списков друзей от других пользователей</li>
+                <li>Настройка приватности в профиле</li>
+                <li>Toggle-переключатель в меню</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🎵 Плеер</h3>
+            <ul>
+                <li>Проигрывание музыки из папки music/</li>
+                <li>Выпадающий список треков</li>
+                <li>Прогресс-бар с отображением времени</li>
+                <li>Автоматическое переключение на следующий трек</li>
+                <li>Бесконечное воспроизведение</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>👑 Админ-панель</h3>
+            <ul>
+                <li>Автоматическое определение администраторов по UID</li>
+                <li>Удаление пользователей (по одному и всех)</li>
+                <li>Очистка комнат</li>
+                <li>Очистка уведомлений</li>
+                <li>Экспорт данных в JSON</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 3: ТЕХСТЕК -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-3">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 3</span>
+        <h2>🛠 Технический стек</h2>
+        <p class="desc">Технологии, используемые в проекте</p>
+
+        <div class="card">
+            <h3>📋 Полный список</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Компонент</th><th>Технология</th></tr>
+                    <tr><td>Frontend</td><td>HTML5, CSS3, Vanilla JavaScript</td></tr>
+                    <tr><td>Backend</td><td>Firebase (Realtime Database, Authentication, Storage)</td></tr>
+                    <tr><td>Аутентификация</td><td>Firebase Auth (Google + Anonymous)</td></tr>
+                    <tr><td>Хранение данных</td><td>Firebase Realtime Database</td></tr>
+                    <tr><td>Хранение файлов</td><td>Firebase Storage (аватарки)</td></tr>
+                    <tr><td>Адаптивность</td><td>Mobile-first подход</td></tr>
+                    <tr><td>Хостинг</td><td>Vercel / GitHub Pages</td></tr>
+                    <tr><td>PWA</td><td>Service Worker (sw.js) + Web Manifest</td></tr>
+                </table>
+            </div>
+        </div>
+
         <div class="card" style="border-color:#a04040;">
-            <h2>⚠️ Важные замечания</h2>
+            <h3>⚠️ Важные замечания</h3>
             <ul>
-                <li><strong>✅ ВСЕ ФАЙЛЫ ЕСТЬ</strong> — ты добавил всё, что я советовал</li>
-                <li><strong>🔐 `.env`</strong> — не забудь на Vercel добавить переменные окружения</li>
-                <li><strong>📦 `package.json`</strong> — если используешь Firebase CLI, добавь скрипты</li>
-                <li><strong>📲 `sw.js`</strong> — зарегистрируй в index.html для PWA</li>
-                <li><strong>🗄️ `firebase.json` + `database.rules.json`</strong> — залей правила в Firebase Console</li>
+                <li>Ключи Firebase должны храниться в <code>.env</code> (переменные окружения)</li>
+                <li>На Vercel нужно добавить переменные: <code>FIREBASE_API_KEY</code>, <code>FIREBASE_AUTH_DOMAIN</code>, <code>FIREBASE_DATABASE_URL</code>, <code>FIREBASE_PROJECT_ID</code>, <code>FIREBASE_STORAGE_BUCKET</code>, <code>FIREBASE_APP_ID</code></li>
+                <li>Правила БД — в <code>database.rules.json</code></li>
+                <li>Правила Storage — в <code>storage.rules</code></li>
             </ul>
         </div>
     </div>
 
-    <!-- ===== DB ===== -->
-    <div class="section" id="sec-db">
-        <div class="card"><h2>📊 Структура Firebase Realtime Database</h2>
-            <pre style="font-size:12px;line-height:1.7;background:#0b0f16;padding:12px;border-radius:8px;overflow-x:auto;border:1px solid #252c38;color:#c8d0dd;">
-sites/{SITE}/
-├── all_users/{uid}/
-├── users/{uid}/
-├── friends/{uid}/{uid}
-├── followers/{uid}/{uid}
-├── notifications/{uid}/
-├── rooms/{roomId}/
-├── room_users/{roomId}/{uid}
-├── dms/{SITE}/{chatId}/messages/
-└── feed_posts/
-    └── comments/{commentId}/</pre>
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 4: БД -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-4">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 4</span>
+        <h2>🗄️ Структура базы данных</h2>
+        <p class="desc">Firebase Realtime Database — полная схема</p>
+
+        <div class="card">
+            <h3>📊 Схема БД</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Узел</th><th>Назначение</th><th>Ключи</th></tr>
+                    <tr><td><code>all_users/{uid}/</code></td><td>Индекс всех пользователей</td><td>name, email, uid, avatarUrl, lastLogin, isAdmin</td></tr>
+                    <tr><td><code>users/{uid}/</code></td><td>Профили пользователей</td><td>name, email, bio, avatarUrl, settings/hideFriends, isAdmin</td></tr>
+                    <tr><td><code>friends/{uid}/{uid}</code></td><td>Статусы дружбы</td><td>"friend" или "pending"</td></tr>
+                    <tr><td><code>followers/{uid}/{uid}</code></td><td>Подписчики</td><td>true</td></tr>
+                    <tr><td><code>notifications/{uid}/</code></td><td>Уведомления</td><td>type, from, fromUid, text, timestamp, read</td></tr>
+                    <tr><td><code>rooms/{roomId}/</code></td><td>Группы/комнаты</td><td>name, icon, createdBy, createdAt, count</td></tr>
+                    <tr><td><code>room_users/{roomId}/{uid}</code></td><td>Участники комнат</td><td>name, joinedAt</td></tr>
+                    <tr><td><code>dms/{SITE}/{chatId}/messages/</code></td><td>Личные сообщения</td><td>nick, text, time, timestamp, likes</td></tr>
+                    <tr><td><code>feed_posts/</code></td><td>Лента постов</td><td>author, authorUid, text, marquee, link, buttons, hashtags, likes, commentCount, edited, comments/</td></tr>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- ===== FIRE ===== -->
-    <div class="section" id="sec-fire">
-        <div class="card"><h2>🔥 Особенности реализации</h2>
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 5: CSS -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-5">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 5</span>
+        <h2>📂 CSS — стили</h2>
+        <p class="desc">3 файла стилей: глобальные, компоненты, адаптив</p>
+
+        <div class="card">
+            <h3>📄 style.css — глобальные стили</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Селектор</th><th>Назначение</th></tr>
+                    <tr><td><code>*</code></td><td>Сброс отступов, box-sizing</td></tr>
+                    <tr><td><code>body</code></td><td>Фон, шрифт, цвет текста</td></tr>
+                    <tr><td><code>.app</code></td><td>Контейнер (max-width: 480px)</td></tr>
+                    <tr><td><code>.card</code></td><td>Карточки (фон, тень, скругление)</td></tr>
+                    <tr><td><code>.modal</code></td><td>Модальные окна (display:none)</td></tr>
+                    <tr><td><code>.google-btn</code></td><td>Кнопка входа через Google</td></tr>
+                    <tr><td><code>.admin-dot</code></td><td>Точка админа (fixed)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📄 components.css — компоненты</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Компонент</th><th>Назначение</th></tr>
+                    <tr><td><code>.post-form</code></td><td>Форма создания поста (textarea, кнопки, превью)</td></tr>
+                    <tr><td><code>.post</code></td><td>Один пост (автор, текст, марки, ссылки, кнопки, хештеги, лайки)</td></tr>
+                    <tr><td><code>.comments</code></td><td>Блок комментариев (список, аватарки, поле ввода)</td></tr>
+                    <tr><td><code>.profile-header</code></td><td>Шапка профиля (аватар, имя, био, статистика)</td></tr>
+                    <tr><td><code>.friend-list</code></td><td>Список друзей</td></tr>
+                    <tr><td><code>.group-list</code></td><td>Список групп</td></tr>
+                    <tr><td><code>.people-list</code></td><td>Список всех пользователей</td></tr>
+                    <tr><td><code>.chat-view</code></td><td>Окно чата</td></tr>
+                    <tr><td><code>.player-mini</code></td><td>Плеер в шапке</td></tr>
+                    <tr><td><code>.playlist-dropdown</code></td><td>Выпадающий список треков</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📄 mobile.css — адаптив</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Брейкпоинт</th><th>Что меняется</th></tr>
+                    <tr><td><code>max-width: 480px</code></td><td>Уменьшение отступов, скрытие имени в шапке, уменьшение шрифтов</td></tr>
+                    <tr><td><code>max-width: 360px</code></td><td>Экстремально маленькие экраны</td></tr>
+                    <tr><td><code>min-width: 481px and max-width: 768px</code></td><td>Планшеты</td></tr>
+                    <tr><td><code>min-width: 769px</code></td><td>Десктопы</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 6: JS -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-6">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 6</span>
+        <h2>📜 JS — скрипты</h2>
+        <p class="desc">11 файлов с полным описанием функций</p>
+
+        <!-- firebase.js -->
+        <div class="card">
+            <h3>📄 firebase.js — конфиг Firebase</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Переменная/Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>FB_CONFIG</code></td><td>Объект с ключами Firebase (apiKey, authDomain, databaseURL, projectId, storageBucket, appId)</td></tr>
+                    <tr><td><code>firebase.initializeApp()</code></td><td>Инициализация Firebase</td></tr>
+                    <tr><td><code>db</code></td><td>firebase.database() — база данных</td></tr>
+                    <tr><td><code>auth</code></td><td>firebase.auth() — авторизация</td></tr>
+                    <tr><td><code>storage</code></td><td>firebase.storage() — хранилище файлов</td></tr>
+                    <tr><td><code>provider</code></td><td>GoogleAuthProvider — для входа через Google</td></tr>
+                    <tr><td><code>ADMIN_UIDS</code></td><td>Массив UID админов</td></tr>
+                    <tr><td><code>SITE</code></td><td>Имя сайта (из hostname)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- app.js -->
+        <div class="card">
+            <h3>📄 app.js — главный контроллер</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>esc(s)</code></td><td>Экранирование HTML (безопасность)</td></tr>
+                    <tr><td><code>cancelRequest(key)</code></td><td>Отмена устаревших запросов к Firebase</td></tr>
+                    <tr><td><code>safeFirebaseQuery(key, ref, callback)</code></td><td>Безопасный запрос к Firebase с отменой</td></tr>
+                    <tr><td><code>checkAdminAccess(uid)</code></td><td>Проверка, является ли пользователь админом</td></tr>
+                    <tr><td><code>toggleTheme()</code></td><td>Переключение тёмной/светлой темы</td></tr>
+                    <tr><td><code>updateUI()</code></td><td>Обновление интерфейса (аватар, имя, кнопки)</td></tr>
+                    <tr><td><code>navigateToFeed()</code></td><td>Переход на ленту</td></tr>
+                    <tr><td><code>showTab(tab)</code></td><td>Переключение табов (лента, группы, люди, профиль)</td></tr>
+                    <tr><td><code>navigateToProfile(uid)</code></td><td>Переход на профиль пользователя</td></tr>
+                    <tr><td><code>loadData()</code></td><td>Загрузка всех данных (лента, группы, люди)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- auth.js -->
+        <div class="card">
+            <h3>📄 auth.js — авторизация</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>googleBtn.addEventListener('click')</code></td><td>Вход через Google</td></tr>
+                    <tr><td><code>loginName()</code></td><td>Анонимный вход с именем</td></tr>
+                    <tr><td><code>logout()</code></td><td>Выход из аккаунта</td></tr>
+                    <tr><td><code>loginWithSavedProfile(uid)</code></td><td>Вход по сохранённому профилю</td></tr>
+                    <tr><td><code>loadSavedProfiles()</code></td><td>Загрузка сохранённых профилей из localStorage</td></tr>
+                    <tr><td><code>saveProfileToList(uid, name, email, avatarUrl)</code></td><td>Сохранение профиля в localStorage</td></tr>
+                    <tr><td><code>renderSavedProfiles()</code></td><td>Отрисовка сохранённых профилей в модалке</td></tr>
+                    <tr><td><code>removeSavedProfile(uid)</code></td><td>Удаление сохранённого профиля</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- profile.js -->
+        <div class="card">
+            <h3>📄 profile.js — профиль</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>renderProfile(uid)</code></td><td>Отрисовка профиля пользователя</td></tr>
+                    <tr><td><code>toggleProfileDropdown()</code></td><td>Открытие/закрытие меню профиля</td></tr>
+                    <tr><td><code>closeProfileDropdown()</code></td><td>Закрытие меню</td></tr>
+                    <tr><td><code>togglePrivacy(event)</code></td><td>Переключение приватности (скрыть друзей)</td></tr>
+                    <tr><td><code>editProfile()</code></td><td>Открытие окна редактирования</td></tr>
+                    <tr><td><code>closeEditProfile()</code></td><td>Закрытие окна редактирования</td></tr>
+                    <tr><td><code>saveProfile()</code></td><td>Сохранение изменений в профиле</td></tr>
+                    <tr><td><code>uploadAvatar()</code></td><td>Загрузка аватарки в Firebase Storage</td></tr>
+                    <tr><td><code>toggleStatList(type, btn)</code></td><td>Переключение вкладок статистики (друзья, подписки, подписчики)</td></tr>
+                    <tr><td><code>updateCounters()</code></td><td>Обновление счётчиков (друзья, подписки, подписчики)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- friends.js -->
+        <div class="card">
+            <h3>📄 friends.js — друзья</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>updateFriendStatus(myUid, targetUid, status)</code></td><td>Обновление статуса дружбы</td></tr>
+                    <tr><td><code>sendFriendRequest(targetUid)</code></td><td>Отправка заявки в друзья</td></tr>
+                    <tr><td><code>acceptFriendRequest(targetUid)</code></td><td>Принятие заявки</td></tr>
+                    <tr><td><code>removeFriend(targetUid)</code></td><td>Удаление из друзей</td></tr>
+                    <tr><td><code>declineFriendRequest(targetUid)</code></td><td>Отклонение заявки</td></tr>
+                    <tr><td><code>loadPeople()</code></td><td>Загрузка списка всех пользователей</td></tr>
+                    <tr><td><code>listenFriendStatus(targetUid)</code></td><td>Слушатель статуса дружбы в реальном времени</td></tr>
+                    <tr><td><code>updateFriendButtonInline(uid, status)</code></td><td>Обновление кнопки дружбы</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- chat.js -->
+        <div class="card">
+            <h3>📄 chat.js — чат</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>openPrivateChat(targetUid)</code></td><td>Открытие чата с пользователем</td></tr>
+                    <tr><td><code>loadChat(path)</code></td><td>Загрузка сообщений из Firebase</td></tr>
+                    <tr><td><code>sendChat()</code></td><td>Отправка сообщения</td></tr>
+                    <tr><td><code>closeChat()</code></td><td>Закрытие чата</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- groups.js -->
+        <div class="card">
+            <h3>📄 groups.js — группы</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>ROOMS</code></td><td>Массив встроенных групп (id, name, icon)</td></tr>
+                    <tr><td><code>loadRooms()</code></td><td>Загрузка групп из Firebase</td></tr>
+                    <tr><td><code>joinRoom(roomId)</code></td><td>Вступление в группу</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- notifications.js -->
+        <div class="card">
+            <h3>📄 notifications.js — уведомления</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>sendNotification(targetUid, data)</code></td><td>Отправка уведомления</td></tr>
+                    <tr><td><code>loadNotifications()</code></td><td>Загрузка уведомлений</td></tr>
+                    <tr><td><code>renderNotifications(notifications, keys)</code></td><td>Отрисовка уведомлений</td></tr>
+                    <tr><td><code>handleNotifClick(notifId, fromUid, type)</code></td><td>Обработка клика по уведомлению</td></tr>
+                    <tr><td><code>openNotifications()</code></td><td>Открытие списка уведомлений</td></tr>
+                    <tr><td><code>closeNotifications()</code></td><td>Закрытие списка уведомлений</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- feed.js -->
+        <div class="card">
+            <h3>📄 feed.js — лента постов и комментарии</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>loadFeed()</code></td><td>Загрузка постов</td></tr>
+                    <tr><td><code>renderPost(p, type)</code></td><td>Отрисовка поста</td></tr>
+                    <tr><td><code>submitPost()</code></td><td>Публикация поста</td></tr>
+                    <tr><td><code>togglePostMenu(id)</code></td><td>Открытие меню поста (три точки)</td></tr>
+                    <tr><td><code>deletePost(id, type)</code></td><td>Удаление поста</td></tr>
+                    <tr><td><code>openEdit(id, type)</code></td><td>Открытие редактирования поста</td></tr>
+                    <tr><td><code>saveEdit()</code></td><td>Сохранение изменений в посте</td></tr>
+                    <tr><td><code>toggleComments(postId, type)</code></td><td>Открытие/закрытие комментариев</td></tr>
+                    <tr><td><code>submitComment(postId, type)</code></td><td>Отправка комментария</td></tr>
+                    <tr><td><code>deleteComment(postId, commentId, type)</code></td><td>Удаление комментария</td></tr>
+                    <tr><td><code>editComment(postId, commentId, type)</code></td><td>Редактирование комментария</td></tr>
+                    <tr><td><code>toggleLike(postId, type)</code></td><td>Лайк поста</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- admin.js -->
+        <div class="card">
+            <h3>📄 admin.js — админ-панель</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>adminDeleteUser(uid)</code></td><td>Удаление пользователя</td></tr>
+                    <tr><td><code>adminDeleteAllUsers()</code></td><td>Удаление всех пользователей (кроме админов)</td></tr>
+                    <tr><td><code>adminClearRooms()</code></td><td>Очистка комнат</td></tr>
+                    <tr><td><code>adminClearNotifications()</code></td><td>Очистка уведомлений</td></tr>
+                    <tr><td><code>adminExportData()</code></td><td>Экспорт данных в JSON</td></tr>
+                    <tr><td><code>adminLogin()</code></td><td>Открытие окна входа админа</td></tr>
+                    <tr><td><code>checkAdmin()</code></td><td>Проверка пароля админа (12345)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- player.js -->
+        <div class="card">
+            <h3>📄 player.js — музыкальный плеер</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Функция</th><th>Назначение</th></tr>
+                    <tr><td><code>PLAYLIST</code></td><td>Массив треков (имя, путь к MP3)</td></tr>
+                    <tr><td><code>initAudio()</code></td><td>Инициализация плеера</td></tr>
+                    <tr><td><code>playMusic()</code></td><td>Воспроизведение/пауза</td></tr>
+                    <tr><td><code>prevTrack()</code></td><td>Предыдущий трек</td></tr>
+                    <tr><td><code>nextTrack()</code></td><td>Следующий трек (с зацикливанием)</td></tr>
+                    <tr><td><code>togglePlaylist()</code></td><td>Открытие/закрытие списка треков</td></tr>
+                    <tr><td><code>playTrack(index)</code></td><td>Воспроизведение выбранного трека</td></tr>
+                    <tr><td><code>updateProgress()</code></td><td>Обновление прогресс-бара и времени</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 7: ПЛЕЕР -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-7">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 7</span>
+        <h2>🎵 Музыкальный плеер</h2>
+        <p class="desc">9 треков из папки music/</p>
+
+        <div class="card">
+            <h3>📋 Плейлист</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>#</th><th>Название</th><th>Файл</th></tr>
+                    <tr><td>1</td><td>Capitulation</td><td><code>capitulation.mp3</code></td></tr>
+                    <tr><td>2</td><td>Clean Victory</td><td><code>clean_victory.mp3</code></td></tr>
+                    <tr><td>3</td><td>Covenant of Change</td><td><code>covenant_of_change.mp3</code></td></tr>
+                    <tr><td>4</td><td>Dreams in the Wind</td><td><code>dreams_in_the_wind.mp3</code></td></tr>
+                    <tr><td>5</td><td>Memory Like Dust</td><td><code>memory_like_dust_path_like_fire.mp3</code></td></tr>
+                    <tr><td>6</td><td>Nobody</td><td><code>nobody.mp3</code></td></tr>
+                    <tr><td>7</td><td>Touch of Choice</td><td><code>touch_of_choice.mp3</code></td></tr>
+                    <tr><td>8</td><td>You Are Not in the Game</td><td><code>you_are_not_in_the_game.mp3</code></td></tr>
+                    <tr><td>9</td><td>You Can't See Me</td><td><code>you_cant_see_me.mp3</code></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🎛️ Функции плеера</h3>
             <ul>
-                <li>Атомарные обновления статусов друзей</li>
-                <li>Кеширование аватарок</li>
-                <li>Отмена устаревших запросов к Firebase</li>
-                <li>SPA-навигация без перезагрузки</li>
-                <li>Автоматическая админ-панель для указанных UID</li>
-                <li>Переключение аккаунтов из сохранённых</li>
-                <li>Комментарии с меню «три точки» (редактирование/удаление)</li>
+                <li>Play / Pause (кнопка ▶️/⏸️)</li>
+                <li>Прогресс-бар с отображением текущего времени</li>
+                <li>Автоматическое переключение на следующий трек</li>
+                <li>Бесконечное воспроизведение (после последнего → первый)</li>
+                <li>Выпадающий список треков</li>
+                <li>Отображение текущего трека в шапке</li>
             </ul>
         </div>
     </div>
 
-    <!-- ===== PLAYER ===== -->
-    <div class="section" id="sec-player">
-        <div class="card"><h2>🎵 Плейлист</h2>
-            <ul>
-                <li>1. Capitulation</li><li>2. Clean Victory</li><li>3. Covenant of Change</li>
-                <li>4. Dreams in the Wind</li><li>5. Memory Like Dust</li><li>6. Nobody</li>
-                <li>7. Touch of Choice</li><li>8. You Are Not in the Game</li><li>9. You Can't See Me</li>
-            </ul>
-            <p style="margin-top:8px;font-size:13px;color:#aab3c2;">Файлы лежат в <code>music/</code>. Плеер теперь в отдельном <code>player.js</code>.</p>
-        </div>
-    </div>
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 8: АДМИНКА -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-8">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 8</span>
+        <h2>👑 Админ-панель</h2>
+        <p class="desc">Автоматическое определение администраторов по UID</p>
 
-    <!-- ===== ADMIN ===== -->
-    <div class="section" id="sec-admin">
-        <div class="card"><h2>👑 Админ-панель</h2>
-            <ul>
-                <li><strong>UID админов:</strong></li>
-                <ul>
-                    <li><code>ayXehcol9FgAQU6tZuup7aSaRoV2</code> — Все Работники</li>
-                    <li><code>pWB0nGVvVXc4je6466ss7IwBm9G2</code> — Джобс Москва</li>
-                    <li><code>ANR62p3qcjOe2ALsdVvJHUNCCV42</code> — Плеер Лайки</li>
-                </ul>
-                <li><strong>Пароль:</strong> <code>12345</code></li>
-                <li><strong>Функции:</strong> удаление пользователей, очистка комнат, очистка уведомлений, экспорт JSON</li>
-            </ul>
+        <div class="card">
+            <h3>🔑 Администраторы (UID)</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>UID</th><th>Кто</th></tr>
+                    <tr><td><code>ayXehcol9FgAQU6tZuup7aSaRoV2</code></td><td>Все Работники</td></tr>
+                    <tr><td><code>pWB0nGVvVXc4je6466ss7IwBm9G2</code></td><td>Джобс Москва</td></tr>
+                    <tr><td><code>ANR62p3qcjOe2ALsdVvJHUNCCV42</code></td><td>Плеер Лайки</td></tr>
+                </table>
+            </div>
+            <p style="margin-top:8px;"><strong>Пароль для входа:</strong> <code>12345</code></p>
         </div>
-    </div>
 
-    <!-- ===== MOBILE ===== -->
-    <div class="section" id="sec-mobile">
-        <div class="card"><h2>📱 Адаптивность</h2>
+        <div class="card">
+            <h3>⚙️ Функции админ-панели</h3>
             <ul>
-                <li>Mobile-first подход</li>
-                <li>Полная поддержка мобильных устройств</li>
-                <li>Сенсорное управление</li>
-                <li>Адаптивные стили в <code>mobile.css</code></li>
+                <li><strong>Удаление пользователя</strong> — по UID</li>
+                <li><strong>Массовое удаление</strong> — всех пользователей (кроме админов)</li>
+                <li><strong>Очистка комнат</strong> — удаление всех групп/комнат</li>
+                <li><strong>Очистка уведомлений</strong> — удаление всех уведомлений</li>
+                <li><strong>Экспорт данных</strong> — выгрузка всей БД в JSON</li>
             </ul>
         </div>
     </div>
 
-    <!-- ===== PWA ===== -->
-    <div class="section" id="sec-pwa">
-        <div class="card"><h2>📲 PWA</h2>
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 9: АДАПТИВ -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-9">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 9</span>
+        <h2>📱 Адаптивность</h2>
+        <p class="desc">Mobile-first подход — 4 брейкпоинта</p>
+
+        <div class="card">
+            <h3>📐 Брейкпоинты</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Медиа-запрос</th><th>Устройства</th><th>Что меняется</th></tr>
+                    <tr><td><code>max-width: 360px</code></td><td>Очень маленькие телефоны</td><td>Супер-компактный интерфейс</td></tr>
+                    <tr><td><code>max-width: 480px</code></td><td>Телефоны</td><td>Скрытие имени в шапке, уменьшение шрифтов, отступов</td></tr>
+                    <tr><td><code>min-width: 481px and max-width: 768px</code></td><td>Планшеты</td><td>Увеличенные отступы, нормальный шрифт</td></tr>
+                    <tr><td><code>min-width: 769px</code></td><td>Десктопы</td><td>Максимальная ширина, полноценный интерфейс</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🎯 Особенности адаптива</h3>
             <ul>
-                <li><strong>site.webmanifest</strong> — манифест для установки на телефон</li>
-                <li><strong>sw.js</strong> — service worker для кеширования и офлайн-режима</li>
-                <li><strong>Иконки</strong> — все размеры в <code>assets/icons/</code> и <code>assets/images/</code></li>
+                <li>Все размеры в <code>rem</code> и <code>%</code></li>
+                <li>Гибкие контейнеры (max-width + auto margins)</li>
+                <li>Сенсорные кнопки (min-height: 44px)</li>
+                <li>Скрытие второстепенных элементов на малых экранах</li>
+                <li>Адаптивные изображения (max-width: 100%)</li>
             </ul>
-            <p style="margin-top:8px;font-size:13px;color:#aab3c2;">Чтобы PWA работало, зарегистрируй <code>sw.js</code> в <code>index.html</code>.</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ГЛАВА 10: PWA -->
+    <!-- ============================================================ -->
+    <div class="chapter" id="ch-10">
+        <button class="back-btn" onclick="goToToc()">← К оглавлению</button>
+        <span class="chapter-number">Глава 10</span>
+        <h2>📲 PWA & Service Worker</h2>
+        <p class="desc">Превращаем сайт в приложение на телефоне</p>
+
+        <div class="card">
+            <h3>📄 site.webmanifest</h3>
+            <p>Манифест для установки сайта на телефон:</p>
+            <div class="table-wrap">
+                <table>
+                    <tr><th>Поле</th><th>Значение</th></tr>
+                    <tr><td><code>name</code></td><td>METAIMPERIYA</td></tr>
+                    <tr><td><code>short_name</code></td><td>METAIMPERIYA</td></tr>
+                    <tr><td><code>description</code></td><td>Социальная платформа нового поколения</td></tr>
+                    <tr><td><code>start_url</code></td><td>/</td></tr>
+                    <tr><td><code>display</code></td><td>standalone (без адресной строки)</td></tr>
+                    <tr><td><code>background_color</code></td><td>#1877f2</td></tr>
+                    <tr><td><code>theme_color</code></td><td>#1877f2</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📄 sw.js — Service Worker</h3>
+            <ul>
+                <li><strong>Кеширование</strong> — загружает сайт в кеш при первом открытии</li>
+                <li><strong>Офлайн-режим</strong> — сайт работает без интернета</li>
+                <li><strong>Быстрая загрузка</strong> — повторные открытия мгновенные</li>
+            </ul>
+            <p style="margin-top:8px;font-size:13px;color:#6a7a8e;">Для регистрации SW добавь в index.html:</p>
+            <pre style="background:#0b0f16;padding:10px;border-radius:8px;font-size:12px;border:1px solid #1a212b;color:#c8d0dd;overflow-x:auto;">
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+}</pre>
+        </div>
+
+        <div class="card" style="border-color:#2a5a3a;">
+            <h3>✅ Итог: PWA готово</h3>
+            <ul>
+                <li>Иконки всех размеров — в <code>assets/icons/</code> и <code>assets/images/</code></li>
+                <li>Манифест — <code>site.webmanifest</code></li>
+                <li>Service Worker — <code>sw.js</code></li>
+                <li>На телефоне появляется кнопка "Установить"</li>
+            </ul>
         </div>
     </div>
 
 </div>
 
+<!-- ============================================================ -->
+<!-- SCRIPT -->
+<!-- ============================================================ -->
 <script>
 // ============================================================
-// 1. ДАННЫЕ: полная структура (все файлы из твоего списка)
+// 1. ДАННЫЕ: дерево проекта (полное, 47 файлов)
 // ============================================================
 const PROJECT_TREE = {
     name: 'metaimperiya',
     type: 'folder',
     children: [
-        { name: 'index.html', type: 'file', content: `<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>METAIMPERIYA</title>\n  <!-- SPA-главная страница -->\n</head>\n<body>...</body>\n</html>` },
-        { name: '404.html', type: 'file', content: `<!DOCTYPE html>\n<html><head><title>404</title></head>\n<body><h1>404</h1><p>Страница не найдена</p></body></html>` },
-        { name: 'README.md', type: 'file', content: `# METAIMPERIYA\nСоциальная платформа нового поколения.` },
-        { name: 'site.webmanifest', type: 'file', content: `{\n  "name": "METAIMPERIYA",\n  "short_name": "METAIMPERIYA",\n  "display": "standalone"\n}` },
-        { name: 'vercel.json', type: 'file', content: `{\n  "builds": [\n    { "src": "**/*.html", "use": "@vercel/static" },\n    { "src": "css/**/*", "use": "@vercel/static" },\n    { "src": "js/**/*", "use": "@vercel/static" },\n    { "src": "assets/**/*", "use": "@vercel/static" },\n    { "src": "music/**/*", "use": "@vercel/static" }\n  ],\n  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]\n}` },
-        { name: 'robots.txt', type: 'file', content: `User-agent: *\nAllow: /` },
-        { name: 'sitemap.xml', type: 'file', content: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://metaimperiya.vercel.app/</loc></url>\n</urlset>` },
-        { name: 'sw.js', type: 'file', content: `// Service Worker\nself.addEventListener('install', e => {\n  e.waitUntil(caches.open('v1').then(c => c.addAll(['/']));\n});` },
-        { name: 'package.json', type: 'file', content: `{\n  "name": "metaimperiya",\n  "version": "1.0.0",\n  "description": "Социальная платформа"\n}` },
-        { name: 'firebase.json', type: 'file', content: `{\n  "database": {\n    "rules": "database.rules.json"\n  },\n  "storage": {\n    "rules": "storage.rules"\n  }\n}` },
-        { name: 'database.rules.json', type: 'file', content: `{\n  "rules": {\n    ".read": "auth != null",\n    ".write": "auth != null"\n  }\n}` },
-        { name: 'storage.rules', type: 'file', content: `rules_version = '2';\nservice firebase.storage {\n  match /b/{bucket}/o {\n    match /{allPaths=**} {\n      allow read, write: if request.auth != null;\n    }\n  }\n}` },
-        { name: '.env', type: 'file', content: `FIREBASE_API_KEY=xxx\nFIREBASE_AUTH_DOMAIN=xxx\nFIREBASE_DATABASE_URL=xxx\nFIREBASE_PROJECT_ID=xxx\nFIREBASE_STORAGE_BUCKET=xxx\nFIREBASE_APP_ID=xxx` },
+        { name: 'index.html', type: 'file' },
+        { name: '404.html', type: 'file' },
+        { name: 'README.md', type: 'file' },
+        { name: 'site.webmanifest', type: 'file' },
+        { name: 'vercel.json', type: 'file' },
+        { name: 'robots.txt', type: 'file' },
+        { name: 'sitemap.xml', type: 'file' },
+        { name: 'sw.js', type: 'file' },
+        { name: 'package.json', type: 'file' },
+        { name: 'firebase.json', type: 'file' },
+        { name: 'database.rules.json', type: 'file' },
+        { name: 'storage.rules', type: 'file' },
+        { name: '.env', type: 'file' },
         {
             name: 'assets',
             type: 'folder',
@@ -448,18 +1043,18 @@ const PROJECT_TREE = {
                     name: 'icons',
                     type: 'folder',
                     children: [
-                        { name: 'metaimperiya.ico', type: 'file', content: '[бинарный]' },
-                        { name: 'metaimperiya-16x16.png', type: 'file', content: '[бинарный]' },
-                        { name: 'metaimperiya-32x32.png', type: 'file', content: '[бинарный]' }
+                        { name: 'metaimperiya.ico', type: 'file' },
+                        { name: 'metaimperiya-16x16.png', type: 'file' },
+                        { name: 'metaimperiya-32x32.png', type: 'file' }
                     ]
                 },
                 {
                     name: 'images',
                     type: 'folder',
                     children: [
-                        { name: 'metaimperiya-192x192.png', type: 'file', content: '[бинарный]' },
-                        { name: 'metaimperiya-512x512.png', type: 'file', content: '[бинарный]' },
-                        { name: 'metaimperiya-icon.png', type: 'file', content: '[бинарный]' }
+                        { name: 'metaimperiya-192x192.png', type: 'file' },
+                        { name: 'metaimperiya-512x512.png', type: 'file' },
+                        { name: 'metaimperiya-icon.png', type: 'file' }
                     ]
                 }
             ]
@@ -468,41 +1063,41 @@ const PROJECT_TREE = {
             name: 'css',
             type: 'folder',
             children: [
-                { name: 'style.css', type: 'file', content: `/* Глобальные стили */\n* { margin:0; padding:0; box-sizing:border-box; }\nbody { background:#f0f2f5; }` },
-                { name: 'components.css', type: 'file', content: `/* Компоненты: посты, комментарии, плеер */\n.post { background:#fff; border-radius:12px; padding:12px; }` },
-                { name: 'mobile.css', type: 'file', content: `/* Адаптив */\n@media (max-width:480px) { .topbar { padding:6px 8px; } }` }
+                { name: 'style.css', type: 'file' },
+                { name: 'components.css', type: 'file' },
+                { name: 'mobile.css', type: 'file' }
             ]
         },
         {
             name: 'js',
             type: 'folder',
             children: [
-                { name: 'firebase.js', type: 'file', content: `// Конфиг Firebase\nconst FB_CONFIG = {\n  apiKey: process.env.FIREBASE_API_KEY,\n  authDomain: process.env.FIREBASE_AUTH_DOMAIN,\n  databaseURL: process.env.FIREBASE_DATABASE_URL,\n  projectId: process.env.FIREBASE_PROJECT_ID,\n  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,\n  appId: process.env.FIREBASE_APP_ID\n};\nfirebase.initializeApp(FB_CONFIG);` },
-                { name: 'app.js', type: 'file', content: `// Главный контроллер SPA` },
-                { name: 'auth.js', type: 'file', content: `// Авторизация (Google + аноним)` },
-                { name: 'profile.js', type: 'file', content: `// Профиль пользователя` },
-                { name: 'friends.js', type: 'file', content: `// Друзья, подписки, подписчики` },
-                { name: 'chat.js', type: 'file', content: `// Личные сообщения` },
-                { name: 'groups.js', type: 'file', content: `// Группы/комнаты` },
-                { name: 'notifications.js', type: 'file', content: `// Уведомления` },
-                { name: 'feed.js', type: 'file', content: `// Лента постов и комментарии` },
-                { name: 'admin.js', type: 'file', content: `// Админ-панель` },
-                { name: 'player.js', type: 'file', content: `// Музыкальный плеер (отдельный файл)` }
+                { name: 'firebase.js', type: 'file' },
+                { name: 'app.js', type: 'file' },
+                { name: 'auth.js', type: 'file' },
+                { name: 'profile.js', type: 'file' },
+                { name: 'friends.js', type: 'file' },
+                { name: 'chat.js', type: 'file' },
+                { name: 'groups.js', type: 'file' },
+                { name: 'notifications.js', type: 'file' },
+                { name: 'feed.js', type: 'file' },
+                { name: 'admin.js', type: 'file' },
+                { name: 'player.js', type: 'file' }
             ]
         },
         {
             name: 'music',
             type: 'folder',
             children: [
-                { name: 'capitulation.mp3', type: 'file', content: '[аудио]' },
-                { name: 'clean_victory.mp3', type: 'file', content: '[аудио]' },
-                { name: 'covenant_of_change.mp3', type: 'file', content: '[аудио]' },
-                { name: 'dreams_in_the_wind.mp3', type: 'file', content: '[аудио]' },
-                { name: 'memory_like_dust_path_like_fire.mp3', type: 'file', content: '[аудио]' },
-                { name: 'nobody.mp3', type: 'file', content: '[аудио]' },
-                { name: 'touch_of_choice.mp3', type: 'file', content: '[аудио]' },
-                { name: 'you_are_not_in_the_game.mp3', type: 'file', content: '[аудио]' },
-                { name: 'you_cant_see_me.mp3', type: 'file', content: '[аудио]' }
+                { name: 'capitulation.mp3', type: 'file' },
+                { name: 'clean_victory.mp3', type: 'file' },
+                { name: 'covenant_of_change.mp3', type: 'file' },
+                { name: 'dreams_in_the_wind.mp3', type: 'file' },
+                { name: 'memory_like_dust_path_like_fire.mp3', type: 'file' },
+                { name: 'nobody.mp3', type: 'file' },
+                { name: 'touch_of_choice.mp3', type: 'file' },
+                { name: 'you_are_not_in_the_game.mp3', type: 'file' },
+                { name: 'you_cant_see_me.mp3', type: 'file' }
             ]
         }
     ]
@@ -526,29 +1121,40 @@ function renderTree(node, level = 0) {
         }
         html += `</div></div>`;
     } else {
-        const fileId = 'file_' + Math.random().toString(36).slice(2, 8);
         const ext = node.name.split('.').pop() || '';
-        html += `<div class="file-item" data-file="${fileId}" data-name="${node.name}" data-content="${encodeURIComponent(node.content || '')}">`;
-        html += `📄 ${node.name} <span class="ext">.${ext}</span>`;
-        html += `</div>`;
-        html += `<div class="file-content" id="${fileId}"><code>${escapeHtml(node.content || '// содержимое не указано')}</code></div>`;
+        const icon = ext === 'mp3' ? '🎵' : ext === 'json' ? '📄' : ext === 'js' ? '📜' : ext === 'css' ? '🎨' : '📄';
+        html += `<div class="file-item">${icon} ${node.name} <span class="ext">.${ext}</span></div>`;
     }
     return html;
 }
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+// ============================================================
+// 3. НАВИГАЦИЯ
+// ============================================================
+function goToToc() {
+    document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+    document.getElementById('ch-0').classList.add('active');
+    document.querySelectorAll('.toc-item').forEach(t => t.style.borderLeft = 'none');
+}
+
+function goToChapter(index) {
+    document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+    const ch = document.getElementById('ch-' + index);
+    if (ch) ch.classList.add('active');
+    document.querySelectorAll('.toc-item').forEach((t, i) => {
+        t.style.borderLeft = (i === index) ? '3px solid #4fc3f7' : 'none';
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ============================================================
-// 3. ИНИЦИАЛИЗАЦИЯ
+// 4. ИНИЦИАЛИЗАЦИЯ
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
+    // Дерево
     document.getElementById('treeContainer').innerHTML = renderTree(PROJECT_TREE);
 
-    // Папки
+    // Раскрытие папок в дереве
     document.querySelectorAll('.folder-label').forEach(el => {
         el.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -560,47 +1166,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Файлы
-    document.querySelectorAll('.file-item').forEach(el => {
-        el.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const fileId = this.dataset.file;
-            const contentEl = document.getElementById(fileId);
-            if (!contentEl) return;
-            document.querySelectorAll('.file-content.open').forEach(c => {
-                if (c.id !== fileId) c.classList.remove('open');
-            });
-            contentEl.classList.toggle('open');
+    // Клик по оглавлению
+    document.querySelectorAll('.toc-item').forEach((item, index) => {
+        item.addEventListener('click', function() {
+            const num = parseInt(this.dataset.chapter);
+            goToChapter(num);
         });
     });
 
-    // Табы
-    const tabs = document.querySelectorAll('.tab-btn');
-    const sections = {
-        tree: document.getElementById('sec-tree'),
-        features: document.getElementById('sec-features'),
-        tech: document.getElementById('sec-tech'),
-        db: document.getElementById('sec-db'),
-        fire: document.getElementById('sec-fire'),
-        player: document.getElementById('sec-player'),
-        admin: document.getElementById('sec-admin'),
-        mobile: document.getElementById('sec-mobile'),
-        pwa: document.getElementById('sec-pwa')
-    };
-
-    tabs.forEach(btn => {
-        btn.addEventListener('click', function() {
-            tabs.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            const tabName = this.dataset.tab;
-            Object.keys(sections).forEach(key => {
-                sections[key].classList.toggle('active', key === tabName);
-            });
-            document.getElementById('searchWrap').classList.remove('open');
-        });
-    });
-
-    // Тема
+    // Тёмная тема
     let dark = true;
     document.getElementById('themeToggle').addEventListener('click', function() {
         dark = !dark;
@@ -608,32 +1182,19 @@ document.addEventListener('DOMContentLoaded', function() {
         this.textContent = dark ? '🌙' : '☀️';
     });
 
-    // Поиск
-    const searchToggle = document.getElementById('searchToggle');
-    const searchWrap = document.getElementById('searchWrap');
-    const searchInput = document.getElementById('searchInput');
-
-    searchToggle.addEventListener('click', function() {
-        searchWrap.classList.toggle('open');
-        if (searchWrap.classList.contains('open')) searchInput.focus();
-    });
-
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
-        document.querySelectorAll('.file-item').forEach(el => {
-            const name = el.dataset.name.toLowerCase();
-            const content = decodeURIComponent(el.dataset.content || '').toLowerCase();
-            const match = name.includes(query) || content.includes(query);
-            el.style.display = match ? '' : 'none';
-            const fileId = el.dataset.file;
-            const contentEl = document.getElementById(fileId);
-            if (contentEl && !match) contentEl.classList.remove('open');
-        });
-        document.querySelectorAll('.folder-label').forEach(el => {
-            const folderName = el.textContent.toLowerCase();
-            el.style.opacity = folderName.includes(query) || query === '' ? '1' : '0.4';
-        });
-    });
+    // Автооткрытие: если в URL есть #ch-2 и т.д.
+    if (window.location.hash) {
+        const id = window.location.hash.replace('#', '');
+        const ch = document.getElementById(id);
+        if (ch) {
+            document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+            ch.classList.add('active');
+            const num = id.replace('ch-', '');
+            document.querySelectorAll('.toc-item').forEach((t, i) => {
+                t.style.borderLeft = (i == num) ? '3px solid #4fc3f7' : 'none';
+            });
+        }
+    }
 });
 </script>
 </body>
