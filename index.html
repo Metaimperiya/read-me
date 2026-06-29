@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>METAIMPERIYA — Полный учебник</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0b0e14;
+            color: #e8edf5;
+            padding: 16px 12px 40px;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.light {
+            background: #f2f4f8;
+            color: #1a1e26;
+        }
+        body.light .card { background: #fff; border-color: #d0d7e2; }
+        body.light .file-content { background: #f8fafc; border-color: #d0d7e2; }
+        body.light .tree-folder > .folder-label { background: #eef2f7; }
+        body.light .search-input { background: #fff; color: #1a1e26; border-color: #d0d7e2; }
+        body.light .tab-btn { background: #eef2f7; color: #1a1e26; }
+        body.light .tab-btn.active { background: #1a73e8; color: #fff; }
+        body.light .badge { background: #e8edf5; color: #1a1e26; }
+
+        .container { max-width: 820px; margin: 0 auto; }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4fc3f7, #7c4dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .theme-toggle, .search-toggle {
+            background: #252c38;
+            border: none;
+            color: #e8edf5;
+            font-size: 20px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        body.light .theme-toggle, body.light .search-toggle {
+            background: #eef2f7;
+            color: #1a1e26;
+        }
+        .theme-toggle:hover, .search-toggle:hover { opacity: 0.8; }
+
+        .search-wrap { display: none; width: 100%; margin-bottom: 16px; }
+        .search-wrap.open { display: block; }
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #2a3340;
+            background: #141b24;
+            color: #e8edf5;
+            font-size: 15px;
+            outline: none;
+        }
+        .search-input:focus { border-color: #4fc3f7; }
+
+        .tabs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .tab-btn {
+            background: #1a212b;
+            border: none;
+            color: #aab3c2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .tab-btn.active { background: #1a73e8; color: #fff; }
+        .tab-btn:hover { opacity: 0.8; }
+
+        .section { display: none; animation: fade 0.25s ease; }
+        .section.active { display: block; }
+        @keyframes fade { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: #141b24;
+            border: 1px solid #252c38;
+            border-radius: 14px;
+            padding: 16px 14px;
+            margin-bottom: 14px;
+            transition: 0.2s;
+        }
+        .card h2 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card h2 .badge {
+            font-size: 11px;
+            background: #252c38;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 400;
+            color: #aab3c2;
+        }
+        .card p, .card li {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #c8d0dd;
+        }
+        body.light .card p, body.light .card li { color: #2d3545; }
+        .card ul { padding-left: 20px; margin: 6px 0; }
+        .card li { margin-bottom: 4px; }
+
+        .tree {
+            font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .tree-folder { margin-left: 4px; }
+        .folder-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #1a212b;
+            margin-bottom: 2px;
+            transition: 0.15s;
+            font-weight: 500;
+            color: #7cbbf7;
+        }
+        body.light .folder-label { background: #eef2f7; color: #1a5bb5; }
+        .folder-label:hover { opacity: 0.8; }
+        .folder-label .arrow { transition: 0.2s; display: inline-block; }
+        .folder-label .arrow.open { transform: rotate(90deg); }
+        .folder-children {
+            display: none;
+            padding-left: 18px;
+            border-left: 1px solid #252c38;
+            margin-left: 6px;
+        }
+        body.light .folder-children { border-color: #d0d7e2; }
+        .folder-children.open { display: block; }
+
+        .file-item {
+            padding: 3px 8px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.15s;
+            color: #b0c4de;
+        }
+        body.light .file-item { color: #1e3a6b; }
+        .file-item:hover { background: #1a212b; }
+        body.light .file-item:hover { background: #e8edf5; }
+        .file-item .ext {
+            color: #6a7a8e;
+            font-size: 11px;
+            margin-left: 6px;
+        }
+        body.light .file-item .ext { color: #7a8aa0; }
+
+        .file-content {
+            display: none;
+            background: #0b0f16;
+            border: 1px solid #252c38;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .file-content.open { display: block; }
+        .file-content code {
+            font-family: 'SF Mono', 'Menlo', monospace;
+            color: #d4e0f0;
+        }
+        body.light .file-content code { color: #1a2636; }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .badge-list .tag {
+            background: #1a212b;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #aab3c2;
+        }
+        body.light .badge-list .tag { background: #eef2f7; color: #2d3545; }
+
+        .hl { color: #f7c948; }
+        .hl-str { color: #7cbf7c; }
+        .hl-key { color: #7cbbf7; }
+        .hl-com { color: #6a7a8e; font-style: italic; }
+        body.light .hl-com { color: #8a9aae; }
+
+        @media (max-width: 500px) {
+            body { padding: 10px 8px 30px; }
+            .card { padding: 12px 10px; }
+            .header h1 { font-size: 17px; }
+            .tab-btn { font-size: 12px; padding: 6px 12px; }
+            .file-content { font-size: 11px; max-height: 300px; }
+            .tree { font-size: 12px; }
+        }
+        @media (min-width: 768px) { .container { max-width: 900px; } }
+
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #141b24; }
+        ::-webkit-scrollbar-thumb { background: #2a3340; border-radius: 4px; }
+        body.light ::-webkit-scrollbar-track { background: #eef2f7; }
+        body.light ::-webkit-scrollbar-thumb { background: #c0c8d4; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>🏛️ METAIMPERIYA · Учебник</h1>
+        <div class="header-actions">
+            <button class="search-toggle" id="searchToggle">🔍</button>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </div>
+
+    <div class="search-wrap" id="searchWrap">
+        <input class="search-input" id="searchInput" placeholder="Поиск по файлам, функциям, категориям..." />
+    </div>
+
+    <div class="tabs" id="tabs">
+        <button class="tab-btn active" data-tab="tree">📁 Структура</button>
+        <button class="tab-btn" data-tab="features">🚀 Возможности</button>
+        <button class="tab-btn" data-tab="tech">🛠 Технологии</button>
+        <button class="tab-btn" data-tab="db">📊 База данных</button>
+        <button class="tab-btn" data-tab="fire">🔥 Особенности</button>
+        <button class="tab-btn" data-tab="player">🎵 Плеер</button>
+        <button class="tab-btn" data-tab="admin">👑 Админка</button>
+        <button class="tab-btn" data-tab="mobile">📱 Адаптив</button>
+        <button class="tab-btn" data-tab="pwa">📲 PWA</button>
+    </div>
+
+    <!-- ===== TREE ===== -->
+    <div class="section active" id="sec-tree">
+        <div class="card">
+            <h2>📁 Полная структура проекта <span class="badge">все файлы</span></h2>
+            <div class="tree" id="treeContainer"></div>
+        </div>
+        <div class="card" style="border-color:#2a5a3a;">
+            <h2>💡 Как пользоваться</h2>
+            <ul>
+                <li>📂 <strong>Кликай на папку</strong> — раскрывается содержимое</li>
+                <li>📄 <strong>Кликай на файл</strong> — показывается его код/содержимое</li>
+                <li>🔍 <strong>Поиск</strong> — ищет по названиям файлов и содержимому</li>
+                <li>🌙 <strong>Тёмная/светлая тема</strong> — для глаз</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== FEATURES ===== -->
+    <div class="section" id="sec-features">
+        <div class="card"><h2>🚀 Основные возможности</h2>
+            <ul>
+                <li><strong>👤 Авторизация</strong> — Google + анонимный вход, сохранение профилей в localStorage</li>
+                <li><strong>👥 Пользователи</strong> — список всех, просмотр профилей, аватарки</li>
+                <li><strong>🤝 Друзья</strong> — заявки, принятие/отклонение, удаление, списки (друзья, подписки, подписчики)</li>
+                <li><strong>💬 Личные сообщения</strong> — приватные чаты, уведомления о новых</li>
+                <li><strong>🔔 Уведомления</strong> — о заявках, принятии, сообщениях, счётчик непрочитанных</li>
+                <li><strong>👥 Группы</strong> — 9 встроенных + создание своих, чаты групп</li>
+                <li><strong>🔒 Приватность</strong> — скрытие списков друзей, toggle в профиле</li>
+                <li><strong>👑 Админ-панель</strong> — удаление пользователей, очистка комнат, экспорт JSON</li>
+                <li><strong>🎵 Плеер</strong> — 9 треков, прогресс-бар, автоматическое переключение</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== TECH ===== -->
+    <div class="section" id="sec-tech">
+        <div class="card"><h2>🛠 Технический стек</h2>
+            <div class="badge-list">
+                <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Vanilla JS</span>
+                <span class="tag">Firebase Auth</span><span class="tag">Firebase Realtime DB</span>
+                <span class="tag">Firebase Storage</span><span class="tag">Mobile-first</span>
+                <span class="tag">SPA</span><span class="tag">PWA</span>
+            </div>
+        </div>
+        <div class="card" style="border-color:#a04040;">
+            <h2>⚠️ Важные замечания</h2>
+            <ul>
+                <li><strong>✅ ВСЕ ФАЙЛЫ ЕСТЬ</strong> — ты добавил всё, что я советовал</li>
+                <li><strong>🔐 `.env`</strong> — не забудь на Vercel добавить переменные окружения</li>
+                <li><strong>📦 `package.json`</strong> — если используешь Firebase CLI, добавь скрипты</li>
+                <li><strong>📲 `sw.js`</strong> — зарегистрируй в index.html для PWA</li>
+                <li><strong>🗄️ `firebase.json` + `database.rules.json`</strong> — залей правила в Firebase Console</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== DB ===== -->
+    <div class="section" id="sec-db">
+        <div class="card"><h2>📊 Структура Firebase Realtime Database</h2>
+            <pre style="font-size:12px;line-height:1.7;background:#0b0f16;padding:12px;border-radius:8px;overflow-x:auto;border:1px solid #252c38;color:#c8d0dd;">
+sites/{SITE}/
+├── all_users/{uid}/
+├── users/{uid}/
+├── friends/{uid}/{uid}
+├── followers/{uid}/{uid}
+├── notifications/{uid}/
+├── rooms/{roomId}/
+├── room_users/{roomId}/{uid}
+├── dms/{SITE}/{chatId}/messages/
+└── feed_posts/
+    └── comments/{commentId}/</pre>
+        </div>
+    </div>
+
+    <!-- ===== FIRE ===== -->
+    <div class="section" id="sec-fire">
+        <div class="card"><h2>🔥 Особенности реализации</h2>
+            <ul>
+                <li>Атомарные обновления статусов друзей</li>
+                <li>Кеширование аватарок</li>
+                <li>Отмена устаревших запросов к Firebase</li>
+                <li>SPA-навигация без перезагрузки</li>
+                <li>Автоматическая админ-панель для указанных UID</li>
+                <li>Переключение аккаунтов из сохранённых</li>
+                <li>Комментарии с меню «три точки» (редактирование/удаление)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== PLAYER ===== -->
+    <div class="section" id="sec-player">
+        <div class="card"><h2>🎵 Плейлист</h2>
+            <ul>
+                <li>1. Capitulation</li><li>2. Clean Victory</li><li>3. Covenant of Change</li>
+                <li>4. Dreams in the Wind</li><li>5. Memory Like Dust</li><li>6. Nobody</li>
+                <li>7. Touch of Choice</li><li>8. You Are Not in the Game</li><li>9. You Can't See Me</li>
+            </ul>
+            <p style="margin-top:8px;font-size:13px;color:#aab3c2;">Файлы лежат в <code>music/</code>. Плеер теперь в отдельном <code>player.js</code>.</p>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN ===== -->
+    <div class="section" id="sec-admin">
+        <div class="card"><h2>👑 Админ-панель</h2>
+            <ul>
+                <li><strong>UID админов:</strong></li>
+                <ul>
+                    <li><code>ayXehcol9FgAQU6tZuup7aSaRoV2</code> — Все Работники</li>
+                    <li><code>pWB0nGVvVXc4je6466ss7IwBm9G2</code> — Джобс Москва</li>
+                    <li><code>ANR62p3qcjOe2ALsdVvJHUNCCV42</code> — Плеер Лайки</li>
+                </ul>
+                <li><strong>Пароль:</strong> <code>12345</code></li>
+                <li><strong>Функции:</strong> удаление пользователей, очистка комнат, очистка уведомлений, экспорт JSON</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== MOBILE ===== -->
+    <div class="section" id="sec-mobile">
+        <div class="card"><h2>📱 Адаптивность</h2>
+            <ul>
+                <li>Mobile-first подход</li>
+                <li>Полная поддержка мобильных устройств</li>
+                <li>Сенсорное управление</li>
+                <li>Адаптивные стили в <code>mobile.css</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== PWA ===== -->
+    <div class="section" id="sec-pwa">
+        <div class="card"><h2>📲 PWA</h2>
+            <ul>
+                <li><strong>site.webmanifest</strong> — манифест для установки на телефон</li>
+                <li><strong>sw.js</strong> — service worker для кеширования и офлайн-режима</li>
+                <li><strong>Иконки</strong> — все размеры в <code>assets/icons/</code> и <code>assets/images/</code></li>
+            </ul>
+            <p style="margin-top:8px;font-size:13px;color:#aab3c2;">Чтобы PWA работало, зарегистрируй <code>sw.js</code> в <code>index.html</code>.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ============================================================
+// 1. ДАННЫЕ: полная структура (все файлы из твоего списка)
+// ============================================================
+const PROJECT_TREE = {
+    name: 'metaimperiya',
+    type: 'folder',
+    children: [
+        { name: 'index.html', type: 'file', content: `<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>METAIMPERIYA</title>\n  <!-- SPA-главная страница -->\n</head>\n<body>...</body>\n</html>` },
+        { name: '404.html', type: 'file', content: `<!DOCTYPE html>\n<html><head><title>404</title></head>\n<body><h1>404</h1><p>Страница не найдена</p></body></html>` },
+        { name: 'README.md', type: 'file', content: `# METAIMPERIYA\nСоциальная платформа нового поколения.` },
+        { name: 'site.webmanifest', type: 'file', content: `{\n  "name": "METAIMPERIYA",\n  "short_name": "METAIMPERIYA",\n  "display": "standalone"\n}` },
+        { name: 'vercel.json', type: 'file', content: `{\n  "builds": [\n    { "src": "**/*.html", "use": "@vercel/static" },\n    { "src": "css/**/*", "use": "@vercel/static" },\n    { "src": "js/**/*", "use": "@vercel/static" },\n    { "src": "assets/**/*", "use": "@vercel/static" },\n    { "src": "music/**/*", "use": "@vercel/static" }\n  ],\n  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]\n}` },
+        { name: 'robots.txt', type: 'file', content: `User-agent: *\nAllow: /` },
+        { name: 'sitemap.xml', type: 'file', content: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://metaimperiya.vercel.app/</loc></url>\n</urlset>` },
+        { name: 'sw.js', type: 'file', content: `// Service Worker\nself.addEventListener('install', e => {\n  e.waitUntil(caches.open('v1').then(c => c.addAll(['/']));\n});` },
+        { name: 'package.json', type: 'file', content: `{\n  "name": "metaimperiya",\n  "version": "1.0.0",\n  "description": "Социальная платформа"\n}` },
+        { name: 'firebase.json', type: 'file', content: `{\n  "database": {\n    "rules": "database.rules.json"\n  },\n  "storage": {\n    "rules": "storage.rules"\n  }\n}` },
+        { name: 'database.rules.json', type: 'file', content: `{\n  "rules": {\n    ".read": "auth != null",\n    ".write": "auth != null"\n  }\n}` },
+        { name: 'storage.rules', type: 'file', content: `rules_version = '2';\nservice firebase.storage {\n  match /b/{bucket}/o {\n    match /{allPaths=**} {\n      allow read, write: if request.auth != null;\n    }\n  }\n}` },
+        { name: '.env', type: 'file', content: `FIREBASE_API_KEY=xxx\nFIREBASE_AUTH_DOMAIN=xxx\nFIREBASE_DATABASE_URL=xxx\nFIREBASE_PROJECT_ID=xxx\nFIREBASE_STORAGE_BUCKET=xxx\nFIREBASE_APP_ID=xxx` },
+        {
+            name: 'assets',
+            type: 'folder',
+            children: [
+                {
+                    name: 'icons',
+                    type: 'folder',
+                    children: [
+                        { name: 'metaimperiya.ico', type: 'file', content: '[бинарный]' },
+                        { name: 'metaimperiya-16x16.png', type: 'file', content: '[бинарный]' },
+                        { name: 'metaimperiya-32x32.png', type: 'file', content: '[бинарный]' }
+                    ]
+                },
+                {
+                    name: 'images',
+                    type: 'folder',
+                    children: [
+                        { name: 'metaimperiya-192x192.png', type: 'file', content: '[бинарный]' },
+                        { name: 'metaimperiya-512x512.png', type: 'file', content: '[бинарный]' },
+                        { name: 'metaimperiya-icon.png', type: 'file', content: '[бинарный]' }
+                    ]
+                }
+            ]
+        },
+        {
+            name: 'css',
+            type: 'folder',
+            children: [
+                { name: 'style.css', type: 'file', content: `/* Глобальные стили */\n* { margin:0; padding:0; box-sizing:border-box; }\nbody { background:#f0f2f5; }` },
+                { name: 'components.css', type: 'file', content: `/* Компоненты: посты, комментарии, плеер */\n.post { background:#fff; border-radius:12px; padding:12px; }` },
+                { name: 'mobile.css', type: 'file', content: `/* Адаптив */\n@media (max-width:480px) { .topbar { padding:6px 8px; } }` }
+            ]
+        },
+        {
+            name: 'js',
+            type: 'folder',
+            children: [
+                { name: 'firebase.js', type: 'file', content: `// Конфиг Firebase\nconst FB_CONFIG = {\n  apiKey: process.env.FIREBASE_API_KEY,\n  authDomain: process.env.FIREBASE_AUTH_DOMAIN,\n  databaseURL: process.env.FIREBASE_DATABASE_URL,\n  projectId: process.env.FIREBASE_PROJECT_ID,\n  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,\n  appId: process.env.FIREBASE_APP_ID\n};\nfirebase.initializeApp(FB_CONFIG);` },
+                { name: 'app.js', type: 'file', content: `// Главный контроллер SPA` },
+                { name: 'auth.js', type: 'file', content: `// Авторизация (Google + аноним)` },
+                { name: 'profile.js', type: 'file', content: `// Профиль пользователя` },
+                { name: 'friends.js', type: 'file', content: `// Друзья, подписки, подписчики` },
+                { name: 'chat.js', type: 'file', content: `// Личные сообщения` },
+                { name: 'groups.js', type: 'file', content: `// Группы/комнаты` },
+                { name: 'notifications.js', type: 'file', content: `// Уведомления` },
+                { name: 'feed.js', type: 'file', content: `// Лента постов и комментарии` },
+                { name: 'admin.js', type: 'file', content: `// Админ-панель` },
+                { name: 'player.js', type: 'file', content: `// Музыкальный плеер (отдельный файл)` }
+            ]
+        },
+        {
+            name: 'music',
+            type: 'folder',
+            children: [
+                { name: 'capitulation.mp3', type: 'file', content: '[аудио]' },
+                { name: 'clean_victory.mp3', type: 'file', content: '[аудио]' },
+                { name: 'covenant_of_change.mp3', type: 'file', content: '[аудио]' },
+                { name: 'dreams_in_the_wind.mp3', type: 'file', content: '[аудио]' },
+                { name: 'memory_like_dust_path_like_fire.mp3', type: 'file', content: '[аудио]' },
+                { name: 'nobody.mp3', type: 'file', content: '[аудио]' },
+                { name: 'touch_of_choice.mp3', type: 'file', content: '[аудио]' },
+                { name: 'you_are_not_in_the_game.mp3', type: 'file', content: '[аудио]' },
+                { name: 'you_cant_see_me.mp3', type: 'file', content: '[аудио]' }
+            ]
+        }
+    ]
+};
+
+// ============================================================
+// 2. РЕНДЕР ДЕРЕВА
+// ============================================================
+function renderTree(node, level = 0) {
+    const isFolder = node.type === 'folder';
+    let html = '';
+    if (isFolder) {
+        const folderId = 'f_' + Math.random().toString(36).slice(2, 8) + '_' + level;
+        html += `<div class="tree-folder">`;
+        html += `<div class="folder-label" data-folder="${folderId}">`;
+        html += `<span class="arrow">▶</span> 📂 <strong>${node.name}</strong>`;
+        html += `</div>`;
+        html += `<div class="folder-children" id="${folderId}">`;
+        if (node.children) {
+            node.children.forEach(child => { html += renderTree(child, level + 1); });
+        }
+        html += `</div></div>`;
+    } else {
+        const fileId = 'file_' + Math.random().toString(36).slice(2, 8);
+        const ext = node.name.split('.').pop() || '';
+        html += `<div class="file-item" data-file="${fileId}" data-name="${node.name}" data-content="${encodeURIComponent(node.content || '')}">`;
+        html += `📄 ${node.name} <span class="ext">.${ext}</span>`;
+        html += `</div>`;
+        html += `<div class="file-content" id="${fileId}"><code>${escapeHtml(node.content || '// содержимое не указано')}</code></div>`;
+    }
+    return html;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ============================================================
+// 3. ИНИЦИАЛИЗАЦИЯ
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('treeContainer').innerHTML = renderTree(PROJECT_TREE);
+
+    // Папки
+    document.querySelectorAll('.folder-label').forEach(el => {
+        el.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const folderId = this.dataset.folder;
+            const children = document.getElementById(folderId);
+            if (!children) return;
+            children.classList.toggle('open');
+            this.querySelector('.arrow').classList.toggle('open', children.classList.contains('open'));
+        });
+    });
+
+    // Файлы
+    document.querySelectorAll('.file-item').forEach(el => {
+        el.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const fileId = this.dataset.file;
+            const contentEl = document.getElementById(fileId);
+            if (!contentEl) return;
+            document.querySelectorAll('.file-content.open').forEach(c => {
+                if (c.id !== fileId) c.classList.remove('open');
+            });
+            contentEl.classList.toggle('open');
+        });
+    });
+
+    // Табы
+    const tabs = document.querySelectorAll('.tab-btn');
+    const sections = {
+        tree: document.getElementById('sec-tree'),
+        features: document.getElementById('sec-features'),
+        tech: document.getElementById('sec-tech'),
+        db: document.getElementById('sec-db'),
+        fire: document.getElementById('sec-fire'),
+        player: document.getElementById('sec-player'),
+        admin: document.getElementById('sec-admin'),
+        mobile: document.getElementById('sec-mobile'),
+        pwa: document.getElementById('sec-pwa')
+    };
+
+    tabs.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tabs.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const tabName = this.dataset.tab;
+            Object.keys(sections).forEach(key => {
+                sections[key].classList.toggle('active', key === tabName);
+            });
+            document.getElementById('searchWrap').classList.remove('open');
+        });
+    });
+
+    // Тема
+    let dark = true;
+    document.getElementById('themeToggle').addEventListener('click', function() {
+        dark = !dark;
+        document.body.classList.toggle('light', !dark);
+        this.textContent = dark ? '🌙' : '☀️';
+    });
+
+    // Поиск
+    const searchToggle = document.getElementById('searchToggle');
+    const searchWrap = document.getElementById('searchWrap');
+    const searchInput = document.getElementById('searchInput');
+
+    searchToggle.addEventListener('click', function() {
+        searchWrap.classList.toggle('open');
+        if (searchWrap.classList.contains('open')) searchInput.focus();
+    });
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        document.querySelectorAll('.file-item').forEach(el => {
+            const name = el.dataset.name.toLowerCase();
+            const content = decodeURIComponent(el.dataset.content || '').toLowerCase();
+            const match = name.includes(query) || content.includes(query);
+            el.style.display = match ? '' : 'none';
+            const fileId = el.dataset.file;
+            const contentEl = document.getElementById(fileId);
+            if (contentEl && !match) contentEl.classList.remove('open');
+        });
+        document.querySelectorAll('.folder-label').forEach(el => {
+            const folderName = el.textContent.toLowerCase();
+            el.style.opacity = folderName.includes(query) || query === '' ? '1' : '0.4';
+        });
+    });
+});
+</script>
+</body>
+</html>
